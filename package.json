@@ -1,0 +1,17 @@
+{
+  "name": "basic-react-sass-starter-kit",
+  "version": "1.0.0",
+  "description": "Basic react & sass starter kit with browser-sync",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "browser-sync": "^2.13.0",
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "run-sequence": "^1.2.1"
+  }
+}

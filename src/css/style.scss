@@ -1,0 +1,14 @@
+body {
+  background-color: #f5f5f5;
+
+  & > h1 {
+    text-align: center;
+    color: royalblue;
+  }
+
+  & > div {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
