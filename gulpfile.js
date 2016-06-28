@@ -38,7 +38,7 @@ gulp.task('css', () => {
 gulp.task('js', () => {
   return gulp.src(path.JS_ENTRY)
     .pipe(babel({
-      presets: ['es2015', 'react']
+      presets: ['es2015', 'stage-0', 'react']
     }))
     .pipe(rename('script.js'))
     .pipe(gulp.dest(path.DEST_JS));
