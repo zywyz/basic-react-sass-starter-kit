@@ -6,6 +6,7 @@ var rename = require('gulp-rename');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
+var plumber = require('gulp-plumber');
 
 const path = {
   HTML: 'src/index.html',
@@ -17,6 +18,10 @@ const path = {
   DEST: 'dev',
   DEST_CSS: 'dev/css',
   DEST_JS: 'dev/js',
+};
+
+const onError = function(err) {
+  console.log(err);
 };
 
 gulp.task('clean', () => {
@@ -37,6 +42,9 @@ gulp.task('css', () => {
 
 gulp.task('js', () => {
   return gulp.src(path.JS_ENTRY)
+    .pipe(plumber({
+      errorHandler: onError
+    }))
     .pipe(babel({
       presets: ['es2015', 'stage-0', 'react']
     }))
