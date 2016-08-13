@@ -1,12 +1,17 @@
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
+var minify = require('gulp-clean-css');
 var babel = require('gulp-babel');
+var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var plumber = require('gulp-plumber');
+
+var BUILD = false;
 
 const path = {
   HTML: 'src/index.html',
@@ -24,6 +29,15 @@ const onError = function(err) {
   console.log(err);
 };
 
+gulp.task('production', () => {
+  BUILD = true;
+
+  path.DEST = 'public';
+  path.DEST_CSS = 'public/css';
+  path.DEST_JS = 'public/js';
+  return;
+});
+
 gulp.task('clean', () => {
   return del.sync(path.DEST);
 });
@@ -37,6 +51,7 @@ gulp.task('css', () => {
   return gulp.src(path.CSS_ENTRY)
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
+    .pipe(gulpif(BUILD, minify()))
     .pipe(gulp.dest(path.DEST_CSS));
 });
 
@@ -48,6 +63,7 @@ gulp.task('js', () => {
     .pipe(babel({
       presets: ['es2015', 'stage-0', 'react']
     }))
+    .pipe(gulpif(BUILD, uglify()))
     .pipe(rename('script.js'))
     .pipe(gulp.dest(path.DEST_JS));
 });
@@ -71,3 +87,7 @@ gulp.task('dev', function() {
 });
 
 gulp.task('default', ['dev']);
+
+gulp.task('build', function() {
+  runSequence('production', 'clean', ['copy-html', 'css', 'js']);
+});
